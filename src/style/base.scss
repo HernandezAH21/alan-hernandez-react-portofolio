@@ -6,4 +6,9 @@ body {
 .container {
     display: grid;
     grid-template-columns: 1fr;
+
+    h1, h2 {
+        display: flex;
+        justify-content: center;
+    }
 }
