@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import axios from 'axios';
 
 import NavigationContainer from './navigation/navigation-container';
 import Home from "./pages/home";
@@ -16,10 +17,10 @@ export default class App extends Component {
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN"
-    };
+    }
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-    this.handleUnSuccessfulLogin = this.handleUnSuccessfulLogin.bind(this);
+    this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
   }
 
   handleSuccessfulLogin() {
@@ -28,10 +29,42 @@ export default class App extends Component {
     });
   }
 
-  handleSuccessfulLogin() {
+  handleUnsuccessfulLogin() {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
     });
+  }
+
+  checkLoginStatus() {
+    return axios.get("https://api.devcamp.space/logged_in", { 
+      withCredentials: true
+    }).then(response => {
+      const loggedIn = response.data.logged_in;
+      const loggedInStatus = this.state.loggedInStatus;
+
+      // If loggedIn and status LOGGED_IN => return data
+      // If loggedIn status NOT_LOGGED_IN => update state
+      // If not loggedIn and status LOGGED_IN => update state
+
+      if (loggedIn && loggedInStatus === "LOGGED_IN") {
+        return loggedIn;
+      } else if (loggedIn && loggedInStatus === "NOT_LOGGED_IN") {
+        this.setState({
+          loggedInStatus: "LOGGED_IN"
+        });
+      } else if (!loggedIn && loggedInStatus === "LOGGED_IN") {
+        this.setState({
+          loggedInStatus: "NOT_LOGGED_IN"
+        });
+      }
+    })
+    .catch(error => {
+      console.log("an error", error);
+    })
+  }
+
+  componentDidMount() {
+    this.checkLoginStatus();
   }
 
   render() {
@@ -52,7 +85,7 @@ export default class App extends Component {
                   <Auth 
                     {...props}
                     handleSuccessfulLogin={this.handleSuccessfulLogin}
-                    handleUnSuccessfulLogin={this.handleUnSuccessfulLogin}
+                    handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
                   />
                 )}
               />
