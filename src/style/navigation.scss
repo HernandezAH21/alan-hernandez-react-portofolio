@@ -2,7 +2,19 @@
     display: flex;
     justify-content: space-between;
     padding: 30px;
-  
+
+    .right-side {
+      a {
+        margin-left: 15px;
+        cursor: pointer;
+        color:  $coolred;
+        transition: 0.5s ease-in-out;
+
+        &:hover {
+          color: #bba2a2;
+        }
+      }
+    }
     .left-side {
       display: flex;
     }
@@ -26,13 +38,13 @@
       }
   
       &:hover {
-            color: black;
-            border-bottom: 1px solid black;
+            color: $coolred;
+            border-bottom: 1px solid $coolred;
         }
 
       .nav-link-active {
-            border-bottom: 1px solid black;
-            color: black;
+            border-bottom: 1px solid $coolred;
+            color: $coolred;
         }
     }
 }
