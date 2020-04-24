@@ -9,7 +9,7 @@ import Contact from "./pages/contact";
 import Blog from "./pages/blog";
 import BlogDetail from "./pages/blog-detail";
 import PortfolioManager from "./pages/portfolio-manager";
-import PortfolioDetail from "./portfolio/portfolio-details";
+import PortfolioDetail from "./portfolio/portfolio-detail";
 import Auth from "./pages/auth";
 import NoMatch from "./pages/no-match";
 import Icons from "../helpers/icons";
@@ -23,7 +23,6 @@ export default class App extends Component {
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN"
     };
-
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
